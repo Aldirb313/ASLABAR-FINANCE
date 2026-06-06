@@ -1,8 +1,13 @@
-import { ArrowUpRight, ArrowDownRight, Clock, AlertCircle } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Clock, AlertCircle, Lock } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
 export function Dashboard() {
-  // Mock data for MVP UI testing
+  const { canAccessLoans } = useAuth();
+  const navigate = useNavigate();
+
+  // Mock data
   const data = {
     saldo: 12500000,
     target: 35000000,
@@ -24,48 +29,35 @@ export function Dashboard() {
 
   return (
     <div className="dashboard">
-      {/* Notifikasi Penting */}
       <div className="alert-box">
         <AlertCircle size={24} className="alert-icon" />
         <div>
-          <strong>Pengingat:</strong> Setoran bulan ini jatuh tempo dalam 3 hari.
+          <strong>Informasi:</strong> Pantau terus tabungan Haji & Umroh Anda setiap hari.
         </div>
       </div>
 
-      {/* Ringkasan Saldo Tabungan */}
       <section className="card balance-card">
         <h2>Total Tabungan Haji</h2>
         <div className="balance-amount">{formatRupiah(data.saldo)}</div>
         
         <div className="progress-container">
           <div className="flex justify-between mb-1">
-            <span>Progress: {progressPercent.toFixed(0)}%</span>
+            <span>Progres: {progressPercent.toFixed(0)}%</span>
             <span>Target: {formatRupiah(data.target)}</span>
           </div>
           <div className="progress-bar-bg">
-            <div 
-              className="progress-bar-fill" 
-              style={{ width: `${progressPercent}%` }}
-              role="progressbar"
-              aria-valuenow={progressPercent}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            ></div>
+            <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
           </div>
-          <p className="mt-1 text-muted">
-            Sisa yang dibutuhkan: <strong>{formatRupiah(data.target - data.saldo)}</strong>
-          </p>
         </div>
       </section>
 
-      {/* Jadwal Setoran Berikutnya */}
       <section className="card schedule-card flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="icon-wrapper">
             <Clock size={32} color="var(--primary-color)" />
           </div>
           <div>
-            <h3>Jadwal Setoran</h3>
+            <h3>Setoran Rutin</h3>
             <p className="text-muted">{data.jadwalSetoran.tanggal}</p>
           </div>
         </div>
@@ -74,38 +66,33 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* Tombol Akses Cepat */}
       <section className="quick-actions">
-        <button className="action-btn primary-action">
+        <button className="action-btn primary-action" onClick={() => navigate('/tabungan')}>
           <ArrowUpRight size={32} />
-          <span>Setor Sekarang</span>
+          <span>Setor Tabungan</span>
         </button>
         
-        <button className="action-btn secondary-action">
-          <ArrowDownRight size={32} />
-          <span>Ajukan Pinjaman</span>
+        <button 
+          className={`action-btn secondary-action ${!canAccessLoans ? 'disabled-action' : ''}`}
+          onClick={() => canAccessLoans ? navigate('/pinjaman') : null}
+        >
+          {canAccessLoans ? <ArrowDownRight size={32} /> : <Lock size={32} />}
+          <span>Pinjaman</span>
+          {!canAccessLoans && <small style={{fontSize: '0.7rem'}}>Butuh Izin Admin</small>}
         </button>
       </section>
 
-      {/* Histori Singkat */}
       <section className="card mt-3">
         <div className="flex justify-between items-center mb-2">
-          <h2>Transaksi Terakhir</h2>
-          <button className="btn-text">Lihat Semua</button>
+          <h2>Riwayat Tabungan</h2>
+          <button className="btn-text" onClick={() => navigate('/tabungan')}>Lihat Semua</button>
         </div>
         
         <div className="transaction-list">
           <div className="transaction-item">
             <div className="tx-info">
-              <h4>Setoran Haji</h4>
+              <h4>Setoran Rutin</h4>
               <span className="text-muted">15 Juni 2026</span>
-            </div>
-            <div className="tx-amount tx-plus">+{formatRupiah(500000)}</div>
-          </div>
-          <div className="transaction-item">
-            <div className="tx-info">
-              <h4>Setoran Haji</h4>
-              <span className="text-muted">15 Mei 2026</span>
             </div>
             <div className="tx-amount tx-plus">+{formatRupiah(500000)}</div>
           </div>

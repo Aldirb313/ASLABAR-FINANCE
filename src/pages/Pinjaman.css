@@ -1,0 +1,36 @@
+.pinjaman-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-card {
+  border: 2px solid var(--primary-color);
+  background-color: #F0F7F4;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.terms-list {
+  padding-left: 20px;
+}
+
+.terms-list li {
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.locked-screen {
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
