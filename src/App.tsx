@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Pinjaman } from './pages/Pinjaman';
 import { Tabungan } from './pages/Tabungan';
+import { Jamaah } from './pages/Jamaah';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Login, Register } from './pages/Auth';
 
@@ -17,7 +18,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Profil = () => {
-  const { profile } = useAuth();
+  const { profile, isAdmin } = useAuth();
   return (
     <div className="card mt-3">
       <h2>Profil Saya</h2>
@@ -29,6 +30,12 @@ const Profil = () => {
         <p className="text-muted">Akses Pinjaman</p>
         <p className="font-bold text-large">{profile?.is_loan_authorized ? 'Aktif' : 'Non-aktif (Butuh Izin Admin)'}</p>
       </div>
+      {isAdmin && (
+        <div className="mt-1 p-2 bg-light rounded" style={{border: '1px solid var(--primary-color)'}}>
+          <p className="text-muted">Peran Akun</p>
+          <p className="font-bold text-large" style={{color: 'var(--primary-color)'}}>SUPER ADMIN</p>
+        </div>
+      )}
       <button 
         className="btn-secondary w-full mt-3" 
         style={{borderColor: 'var(--danger-color)', color: 'var(--danger-color)'}}
@@ -56,6 +63,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="tabungan" element={<Tabungan />} />
             <Route path="pinjaman" element={<Pinjaman />} />
+            <Route path="jamaah" element={<Jamaah />} />
             <Route path="profil" element={<Profil />} />
           </Route>
         </Routes>

@@ -1,23 +1,23 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Home, Wallet, FileText, User, Lock } from 'lucide-react';
+import { Home, Wallet, FileText, User, Lock, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Layout.css';
 
 export function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { canAccessLoans, loading } = useAuth();
+  const { canAccessLoans, isAdmin, loading } = useAuth();
 
   const navItems = [
-    { label: 'Beranda', path: '/', icon: <Home size={28} />, visible: true },
-    { label: 'Tabungan', path: '/tabungan', icon: <Wallet size={28} />, visible: true },
+    { label: 'Beranda', path: '/', icon: <Home size={28} /> },
+    { label: 'Tabungan', path: '/tabungan', icon: <Wallet size={28} /> },
     { 
       label: 'Pinjaman', 
       path: '/pinjaman', 
-      icon: canAccessLoans ? <FileText size={28} /> : <Lock size={28} />, 
-      visible: true // Always visible but can show lock icon or different state
+      icon: canAccessLoans ? <FileText size={28} /> : <Lock size={28} />
     },
-    { label: 'Profil', path: '/profil', icon: <User size={28} />, visible: true },
+    { label: 'Jamaah', path: '/jamaah', icon: <Users size={28} />, adminOnly: true },
+    { label: 'Profil', path: '/profil', icon: <User size={28} /> },
   ];
 
   if (loading) return <div className="loading-screen">Memuat...</div>;
@@ -40,7 +40,7 @@ export function Layout() {
       </main>
 
       <nav className="bottom-nav">
-        {navItems.map((item) => (
+        {navItems.filter(item => !item.adminOnly || isAdmin).map((item) => (
           <button
             key={item.path}
             className={`nav-item ${location.pathname === item.path ? 'active' : ''} ${item.path === '/pinjaman' && !canAccessLoans ? 'locked' : ''}`}

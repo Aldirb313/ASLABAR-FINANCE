@@ -1,0 +1,89 @@
+.jamaah-page {
+  padding-bottom: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  border: none;
+  flex: 1;
+  font-size: 1.125rem;
+  outline: none;
+  background: transparent;
+}
+
+.add-form-card {
+  border: 2px solid var(--primary-color);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.form-group input, .form-group select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+}
+
+.jamaah-card {
+  padding: 20px;
+  position: relative;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-badge.waiting {
+  background: #FFF3CD;
+  color: #856404;
+}
+
+.jamaah-details {
+  display: flex;
+  gap: 16px;
+  background: var(--bg-color);
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.btn-icon-danger {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-icon-danger:hover {
+  background: rgba(211, 47, 47, 0.1);
+}
