@@ -14,10 +14,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const UMROH_STEPS_DETAIL = [
   { id: 1, title: 'Miqat & Niat', icon: '📍', description: 'Memulai ibadah dari titik awal yang ditentukan.' },
-  { id: 2, title: 'Tawaf', icon: '🕋', description: 'Mengelilingi Ka''bah sebanyak 7 putaran.' },
+  { id: 2, title: 'Tawaf', icon: '🕋', description: "Mengelilingi Ka'bah sebanyak 7 putaran." },
   { id: 3, title: 'Makam Ibrahim', icon: '🕌', description: 'Sholat sunnah 2 rakaat di belakang Makam Ibrahim.' },
   { id: 4, title: 'Multazam & Zamzam', icon: '💧', description: 'Berdoa di Multazam dan meminum air Zamzam.' },
-  { id: 5, title: 'Sa''i', icon: '🏃', description: 'Berjalan kaki antara bukit Shafa dan Marwa.' },
+  { id: 5, title: "Sa'i", icon: '🏃', description: 'Berjalan kaki antara bukit Shafa dan Marwa.' },
   { id: 6, title: 'Tahallul', icon: '✂️', description: 'Mencukur atau memotong rambut sebagai penutup.' },
 ];
 
