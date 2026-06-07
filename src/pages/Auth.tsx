@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogIn, UserPlus, Phone, Lock, User } from 'lucide-react';
+import { Phone, Lock, User } from 'lucide-react';
 import './Auth.css';
 
 export function Login() {
