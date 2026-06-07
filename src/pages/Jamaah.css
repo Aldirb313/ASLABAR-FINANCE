@@ -2,6 +2,12 @@
   padding-bottom: 20px;
 }
 
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 .search-box {
   display: flex;
   align-items: center;
@@ -59,20 +65,20 @@
   color: #856404;
 }
 
-.jamaah-details {
+.jamaah-info-grid {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 8px;
   background: var(--bg-color);
-  padding: 10px;
+  padding: 12px;
   border-radius: 12px;
 }
 
-.detail-item {
+.info-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  gap: 8px;
+  font-size: 0.9rem;
 }
 
 .btn-icon-danger {

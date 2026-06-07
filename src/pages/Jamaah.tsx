@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { Users, Search, UserPlus, Trash2, Calendar, BadgeCheck } from 'lucide-react';
+import { Users, Search, UserPlus, Trash2, Calendar, MapPin, BadgeCheck, Hash, User } from 'lucide-react';
 import './Jamaah.css';
 
 export function Jamaah() {
@@ -11,14 +11,15 @@ export function Jamaah() {
   const [searchTerm, setSearchSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   
-  // Form State
+  // Form State Updated for new requirements
   const [form, setForm] = useState({
     full_name: '',
-    nik: '',
-    phone: '',
-    package_type: 'umroh_reguler',
-    address: '',
-    estimated_departure_year: new Date().getFullYear() + 1
+    group_name: '',
+    birth_info: '',
+    registration_year: new Date().getFullYear(),
+    registration_location: '',
+    portion_number: '',
+    package_type: 'haji_reguler' // internal default
   });
 
   useEffect(() => {
@@ -44,9 +45,10 @@ export function Jamaah() {
     } else {
       setShowAddForm(false);
       setForm({
-        full_name: '', nik: '', phone: '',
-        package_type: 'umroh_reguler', address: '',
-        estimated_departure_year: new Date().getFullYear() + 1
+        full_name: '', group_name: '', birth_info: '',
+        registration_year: new Date().getFullYear(),
+        registration_location: '', portion_number: '',
+        package_type: 'haji_reguler'
       });
       fetchJamaah();
     }
@@ -70,8 +72,8 @@ export function Jamaah() {
   }
 
   const filteredList = jamaahList.filter(j => 
-    j.full_name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    j.nik.includes(searchTerm)
+    j.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    j.portion_number?.includes(searchTerm)
   );
 
   return (
@@ -92,21 +94,26 @@ export function Jamaah() {
               <input type="text" value={form.full_name} onChange={e => setForm({...form, full_name: e.target.value})} required />
             </div>
             <div className="form-group">
-              <label>NIK (16 Digit)</label>
-              <input type="text" value={form.nik} onChange={e => setForm({...form, nik: e.target.value})} required />
+              <label>Kelompok</label>
+              <input type="text" value={form.group_name} onChange={e => setForm({...form, group_name: e.target.value})} placeholder="Contoh: KBIH Fav Tour" />
             </div>
             <div className="form-group">
-              <label>Paket Ibadah</label>
-              <select value={form.package_type} onChange={e => setForm({...form, package_type: e.target.value})}>
-                <option value="haji_reguler">Haji Reguler</option>
-                <option value="haji_plus">Haji Plus</option>
-                <option value="umroh_reguler">Umroh Reguler</option>
-                <option value="umroh_eksekutif">Umroh Eksekutif</option>
-              </select>
+              <label>Tempat Tanggal Lahir</label>
+              <input type="text" value={form.birth_info} onChange={e => setForm({...form, birth_info: e.target.value})} placeholder="Contoh: Magetan, 12-05-1970" />
+            </div>
+            <div className="grid-2">
+              <div className="form-group">
+                <label>Tahun Daftar Haji</label>
+                <input type="number" value={form.registration_year} onChange={e => setForm({...form, registration_year: parseInt(e.target.value)})} />
+              </div>
+              <div className="form-group">
+                <label>Nomor Porsi Haji</label>
+                <input type="text" value={form.portion_number} onChange={e => setForm({...form, portion_number: e.target.value})} placeholder="10 Digit" />
+              </div>
             </div>
             <div className="form-group">
-              <label>Estimasi Keberangkatan (Tahun)</label>
-              <input type="number" value={form.estimated_departure_year} onChange={e => setForm({...form, estimated_departure_year: parseInt(e.target.value)})} />
+              <label>Lokasi Daftar Haji</label>
+              <input type="text" value={form.registration_location} onChange={e => setForm({...form, registration_location: e.target.value})} placeholder="Kemenag Kab. Magetan" />
             </div>
             <button type="submit" className="btn-primary w-full">Simpan Data Jamaah</button>
           </form>
@@ -117,7 +124,7 @@ export function Jamaah() {
         <Search size={20} className="text-muted" />
         <input 
           type="text" 
-          placeholder="Cari Nama atau NIK..." 
+          placeholder="Cari Nama atau Nomor Porsi..." 
           value={searchTerm}
           onChange={e => setSearchSearchTerm(e.target.value)}
         />
@@ -134,26 +141,30 @@ export function Jamaah() {
               <div key={j.id} className="card jamaah-card">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="text-large">{j.full_name}</h4>
-                    <p className="text-muted text-sm">NIK: {j.nik}</p>
+                    <h4 className="text-large" style={{color: 'var(--primary-color)'}}>{j.full_name}</h4>
+                    <p className="font-bold text-sm">Kelompok: {j.group_name || '-'}</p>
                   </div>
-                  <div className={`status-badge ${j.status}`}>
-                    {j.status === 'waiting' ? 'Menunggu' : j.status}
+                  <div className="status-badge waiting">
+                    Porsi: {j.portion_number || 'N/A'}
                   </div>
                 </div>
                 
-                <div className="jamaah-details mt-2">
-                  <div className="detail-item">
-                    <BadgeCheck size={16} />
-                    <span>{j.package_type.replace('_', ' ').toUpperCase()}</span>
+                <div className="jamaah-info-grid mt-2">
+                  <div className="info-item">
+                    <User size={14} className="text-muted" />
+                    <span>Lahir: {j.birth_info || '-'}</span>
                   </div>
-                  <div className="detail-item">
-                    <Calendar size={16} />
-                    <span>Est. {j.estimated_departure_year}</span>
+                  <div className="info-item">
+                    <Calendar size={14} className="text-muted" />
+                    <span>Daftar: {j.registration_year}</span>
+                  </div>
+                  <div className="info-item">
+                    <MapPin size={14} className="text-muted" />
+                    <span>Lokasi: {j.registration_location || '-'}</span>
                   </div>
                 </div>
 
-                <div className="flex justify-end mt-2">
+                <div className="flex justify-end mt-2 pt-2" style={{borderTop: '1px solid var(--border-color)'}}>
                   <button className="btn-icon-danger" onClick={() => handleDelete(j.id)}>
                     <Trash2 size={18} />
                   </button>
