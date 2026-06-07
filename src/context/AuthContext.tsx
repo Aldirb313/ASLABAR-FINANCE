@@ -4,6 +4,7 @@ import type { User } from '@supabase/supabase-js';
 
 interface Profile {
   id: string;
+  email: string; // Added email
   full_name: string;
   role: 'user' | 'super_admin';
   plan_type: 'free' | 'premium';
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
       if (session?.user) {
-        await fetchProfile(session.user.id);
+        await fetchProfile(session.user.id, session.user.email);
       }
       setLoading(false);
     };
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        await fetchProfile(session.user.id);
+        await fetchProfile(session.user.id, session.user.email);
       } else {
         setProfile(null);
       }
@@ -61,13 +62,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => authListener.subscription.unsubscribe();
   }, []);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (userId: string, email?: string) => {
     const { data } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
       .single();
-    setProfile(data);
+    
+    if (data) {
+      setProfile({ ...data, email: email || data.email });
+    }
   };
 
   return (

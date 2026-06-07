@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Search, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function AdminClientManagement() {

@@ -1,14 +1,11 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { useState } from 'react';
 import { 
   ChevronRight, 
   MapPin, 
   Info, 
   Volume2, 
   CheckCircle2, 
-  ArrowLeft,
-  Circle,
-  Clock
+  ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -26,7 +23,7 @@ export function PanduanUmroh() {
 
   return (
     <div className="space-y-6">
-      <header className="px-2">
+      <header className="px-2 pt-2">
          <h2 className="text-2xl font-black text-primary-dark">Manasik Digital 🕋</h2>
          <p className="text-gray-400 text-sm font-medium">Panduan ibadah umroh step-by-step.</p>
       </header>
@@ -53,7 +50,7 @@ export function PanduanUmroh() {
       </div>
 
       {/* STEP LIST */}
-      <div className="space-y-4">
+      <div className="space-y-4 pb-10">
         <AnimatePresence mode='wait'>
           {activeStep ? (
              <motion.div 
@@ -82,7 +79,7 @@ export function PanduanUmroh() {
                         <h4 className="font-bold text-primary-dark">Penjelasan</h4>
                       </div>
                       <p className="text-sm leading-relaxed text-gray-600">
-                        {UMROH_STEPS_DETAIL.find(s => s.id === activeStep)?.description} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        {UMROH_STEPS_DETAIL.find(s => s.id === activeStep)?.description}
                       </p>
                    </div>
 
@@ -125,7 +122,7 @@ export function PanduanUmroh() {
                         </button>
                       </div>
                       <p className="arabic-text text-2xl text-center mb-4">لَبَّيْكَ اللَّهُمَّ عُمْرَةً</p>
-                      <p className="text-xs text-center text-white/60 italic">"Labbaykallahumma 'umratan"</p>
+                      <p className="text-xs text-center text-white/60 italic font-medium">"Labbaykallahumma 'umratan"</p>
                    </div>
                 </div>
 

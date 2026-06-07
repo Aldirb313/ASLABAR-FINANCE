@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Heart, Search, Play, Maximize2, Moon, Sun, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, Search, Play, Moon, Sun, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function BankDoa() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -46,7 +46,7 @@ export function BankDoa() {
       <div className="max-w-2xl mx-auto space-y-6">
         
         {/* HEADER & SEARCH */}
-        <div className="flex justify-between items-center px-2">
+        <div className="flex justify-between items-center px-2 pt-2">
            <h2 className={`text-2xl font-black ${isDarkMode ? 'text-secondary' : 'text-primary-dark'}`}>Bank Doa 🤲</h2>
            <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
@@ -85,9 +85,9 @@ export function BankDoa() {
         </div>
 
         {/* DOA LIST */}
-        <div className="space-y-4 px-1">
+        <div className="space-y-4 px-1 pb-10">
           {loading ? (
-            <p className="text-center py-10 opacity-50">Mengambil doa suci...</p>
+            <p className="text-center py-10 opacity-50 font-bold uppercase text-[10px] tracking-widest">Mengambil doa suci...</p>
           ) : filteredDoa.length === 0 ? (
             <div className="text-center py-20 space-y-3 opacity-40">
                <Heart size={48} className="mx-auto" />

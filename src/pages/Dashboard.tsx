@@ -4,14 +4,13 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowUpRight, 
-  ArrowDownRight, 
-  Clock, 
-  Lock, 
   ChevronRight, 
-  CheckCircle2, 
-  Calendar,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Heart,
+  BookOpen,
+  Wallet,
+  User
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -20,7 +19,7 @@ export function Dashboard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [savingsData, setSavingsData] = useState<any>(null);
-  const [prepProgress, setPrepProgress] = useState(65); // Mock for now, will connect to user_checklist later
+  const prepProgress = 65; // Mock for now
 
   useEffect(() => {
     async function fetchData() {
@@ -37,9 +36,7 @@ export function Dashboard() {
   }, [profile]);
 
   const formatRupiah = (amount: number) => {
-    return 'Rp ' + new Intl.NumberFormat('id-ID', {
-      minimumFractionDigits: 0
-    }).format(amount) + ',-';
+    return 'Rp ' + new Intl.NumberFormat('id-ID').format(amount) + ',-';
   };
 
   if (loading) return <div className="text-center py-20 text-primary font-medium animate-pulse">Menyiapkan Dashboard Anda...</div>;

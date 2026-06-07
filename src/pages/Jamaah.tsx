@@ -8,8 +8,6 @@ import {
   Trash2, 
   Calendar, 
   MapPin, 
-  User,
-  ChevronRight,
   ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -145,7 +143,7 @@ export function Jamaah() {
         />
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 pb-10">
         {loading ? (
           <p className="text-center py-10 text-gray-400 animate-pulse">Menghubungkan ke pusat data...</p>
         ) : filteredList.length === 0 ? (

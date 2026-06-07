@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { Wallet, PlusCircle, CheckCircle, ArrowUpRight, History } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Wallet, PlusCircle, ArrowUpRight, History } from 'lucide-react';
 
 export function Tabungan() {
   const { profile } = useAuth();
@@ -80,8 +79,8 @@ export function Tabungan() {
 
     const { error: saveError } = await supabase
       .from('savings')
-      .update({ current_amount: savings.current_amount + depositAmount })
-      .eq('id', savings.id);
+      .update({ current_amount: (savings?.current_amount || 0) + depositAmount })
+      .eq('id', savings?.id);
 
     if (saveError) alert(saveError.message);
     else {
@@ -97,7 +96,7 @@ export function Tabungan() {
 
   return (
     <div className="space-y-6">
-      <header className="px-2">
+      <header className="px-2 pt-2">
          <h2 className="text-2xl font-black text-primary-dark">Tabungan Umroh 💰</h2>
          <p className="text-gray-400 text-sm font-medium">Kumpulkan bekal menuju Baitullah.</p>
       </header>
@@ -110,7 +109,7 @@ export function Tabungan() {
           </div>
           <form onSubmit={handleCreateTarget} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-400 uppercase">Jenis Ibadah</label>
+              <label className="text-[10px] font-black text-gray-400 uppercase ml-1">Jenis Ibadah</label>
               <select 
                 value={targetType} 
                 onChange={(e) => setTargetType(e.target.value)}
@@ -122,7 +121,7 @@ export function Tabungan() {
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-400 uppercase">Target Dana</label>
+              <label className="text-[10px] font-black text-gray-400 uppercase ml-1">Target Dana</label>
               <input 
                 type="number" 
                 value={targetAmount} 
@@ -189,10 +188,10 @@ export function Tabungan() {
             </form>
           </section>
 
-          <section className="space-y-4">
+          <section className="space-y-4 pb-10">
              <div className="flex items-center gap-2 px-2 text-primary-dark">
                 <History size={18} />
-                <h3 className="font-black">Riwayat Setoran</h3>
+                <h3 className="font-black uppercase text-xs tracking-widest">Riwayat Setoran</h3>
              </div>
              <div className="space-y-3">
                 {transactions.length === 0 ? (
@@ -205,7 +204,7 @@ export function Tabungan() {
                         </div>
                         <div>
                            <p className="font-bold text-gray-700 text-sm">Setoran Rutin</p>
-                           <p className="text-[10px] font-bold text-gray-400">{new Date(tx.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{new Date(tx.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         </div>
                      </div>
                      <span className="font-black text-primary text-sm">+{formatRupiah(tx.amount)}</span>
