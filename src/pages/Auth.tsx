@@ -10,6 +10,16 @@ export function Login() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
+    if (error) setError(error.message);
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -19,18 +29,18 @@ export function Login() {
 
     if (error) {
       if (error.message.includes('rate limit')) {
-        setError('Batas pengiriman email tercapai. Silakan coba Login langsung (akun mungkin sudah aktif) atau tunggu beberapa saat.');
+        setError('Batas pengiriman email tercapai. Silakan coba Login langsung atau gunakan Gmail.');
       } else {
         setError(error.message);
       }
       setLoading(false);
     } else {
-      navigate('/dashboard');
+      navigate('/');
     }
   };
 
   return (
-    <div className="min-height-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row bg-cream">
       {/* LEFT PANEL - BRANDING */}
       <div className="md:w-5/12 bg-primary-dark relative overflow-hidden flex flex-col items-center justify-center p-12 text-white">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -39,72 +49,82 @@ export function Login() {
         
         <div className="relative z-10 text-center">
           <img src="/logo.png" alt="Fav Umroh" className="h-32 w-auto mb-8 mx-auto drop-shadow-2xl" />
-          <h1 className="text-4xl font-bold mb-4 font-sans">Bismillah,</h1>
+          <h1 className="text-4xl font-bold mb-4 font-sans text-white">Bismillah,</h1>
           <p className="text-xl text-cream/80 italic font-serif">"Umroh adalah tamu Allah, dan Allah memuliakan hamba-Nya yang datang bertamu."</p>
-        </div>
-        
-        <div className="mt-12 relative z-10">
-          <div className="px-6 py-2 bg-secondary/20 rounded-full border border-secondary/30 text-secondary text-sm font-bold">
-            Teman Setia Perjalanan Umrohmu
-          </div>
         </div>
       </div>
 
       {/* RIGHT PANEL - FORM */}
-      <div className="md:w-7/12 bg-cream flex items-center justify-center p-8">
+      <div className="md:w-7/12 flex items-center justify-center p-8">
         <div className="w-full max-w-md bg-white rounded-[40px] p-10 shadow-xl shadow-gray-200/50 border border-gray-100">
           <div className="mb-8">
             <h2 className="text-3xl font-extrabold text-primary-dark">Selamat Datang</h2>
-            <p className="text-gray-500 mt-2">Masuk untuk melanjutkan persiapan ibadahmu.</p>
+            <p className="text-gray-500 mt-2">Masuk otomatis atau gunakan email.</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm border border-red-100 animate-shake">
-                {error}
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input 
-                  type="email" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
-                  placeholder="nama@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">Kata Sandi</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input 
-                  type="password" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
+          <div className="space-y-6">
             <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-primary text-white py-5 rounded-[24px] font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 flex items-center justify-center gap-3"
+              onClick={handleGoogleLogin}
+              className="w-full bg-white border-2 border-gray-100 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all active:scale-95"
             >
-              {loading ? 'Memproses...' : (
-                <>Mulai Persiapan Sekarang <ArrowRight size={20} /></>
-              )}
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="h-5 w-5" />
+              Masuk Otomatis dengan Gmail
             </button>
-          </form>
+
+            <div className="flex items-center gap-4 my-6 opacity-30">
+               <div className="h-[1px] bg-gray-300 flex-1" />
+               <span className="text-[10px] font-bold uppercase tracking-widest">Atau gunakan email</span>
+               <div className="h-[1px] bg-gray-300 flex-1" />
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-6">
+              {error && (
+                <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm border border-red-100 animate-shake">
+                  {error}
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700 ml-1">Email</label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="email" 
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
+                    placeholder="nama@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700 ml-1">Kata Sandi</label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="password" 
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-primary text-white py-5 rounded-[24px] font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 flex items-center justify-center gap-3"
+              >
+                {loading ? 'Memproses...' : (
+                  <>Mulai Persiapan <ArrowRight size={20} /></>
+                )}
+              </button>
+            </form>
+          </div>
 
           <div className="mt-10 text-center">
             <p className="text-gray-500">
@@ -126,6 +146,16 @@ export function Register() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
+    if (error) setError(error.message);
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -139,7 +169,7 @@ export function Register() {
 
     if (error) {
       if (error.message.includes('rate limit')) {
-        setError('Batas pengiriman email tercapai. Silakan coba Login langsung (akun mungkin sudah aktif) atau tunggu beberapa saat.');
+        setError('Batas pengiriman email tercapai. Silakan coba Login langsung atau gunakan Gmail.');
       } else {
         setError(error.message);
       }
@@ -151,7 +181,7 @@ export function Register() {
   };
 
   return (
-    <div className="min-height-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row bg-cream">
       {/* LEFT PANEL */}
       <div className="md:w-5/12 bg-primary-dark relative overflow-hidden flex flex-col items-center justify-center p-12 text-white">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -159,77 +189,93 @@ export function Register() {
         </div>
         <div className="relative z-10 text-center">
           <img src="/logo.png" alt="Fav Umroh" className="h-32 w-auto mb-8 mx-auto drop-shadow-2xl" />
-          <h1 className="text-4xl font-bold mb-4">Daftar Akun</h1>
+          <h1 className="text-4xl font-bold mb-4 text-white">Daftar Akun</h1>
           <p className="text-xl text-cream/80 italic">Lengkapi data untuk mulai merencanakan perjalanan suci Anda.</p>
         </div>
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="md:w-7/12 bg-cream flex items-center justify-center p-8">
+      <div className="md:w-7/12 flex items-center justify-center p-8">
         <div className="w-full max-w-md bg-white rounded-[40px] p-10 shadow-xl shadow-gray-200/50 border border-gray-100">
           <div className="mb-8">
             <h2 className="text-3xl font-extrabold text-primary-dark">Buat Akun Baru</h2>
-            <p className="text-gray-500 mt-2">Satu akun untuk semua fitur persiapan umroh.</p>
+            <p className="text-gray-500 mt-2">Daftar instan dengan Gmail Anda.</p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-5">
-            {error && <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm border border-red-100">{error}</div>}
-
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">Nama Lengkap</label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input 
-                  type="text" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
-                  placeholder="Nama Lengkap Sesuai KTP"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input 
-                  type="email" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
-                  placeholder="nama@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">Kata Sandi</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                <input 
-                  type="password" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
-                  placeholder="Minimal 6 karakter"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
+          <div className="space-y-6">
             <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-primary text-white py-5 rounded-[24px] font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 flex items-center justify-center gap-3"
+              onClick={handleGoogleLogin}
+              className="w-full bg-white border-2 border-gray-100 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all active:scale-95"
             >
-              {loading ? 'Mendaftarkan...' : (
-                <>Daftar & Mulai Persiapan <ArrowRight size={20} /></>
-              )}
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="h-5 w-5" />
+              Daftar Instan dengan Gmail
             </button>
-          </form>
+
+            <div className="flex items-center gap-4 my-6 opacity-30">
+               <div className="h-[1px] bg-gray-300 flex-1" />
+               <span className="text-[10px] font-bold uppercase tracking-widest">Atau isi form</span>
+               <div className="h-[1px] bg-gray-300 flex-1" />
+            </div>
+
+            <form onSubmit={handleRegister} className="space-y-5">
+              {error && <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm border border-red-100">{error}</div>}
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700 ml-1">Nama Lengkap</label>
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="text" 
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
+                    placeholder="Nama Lengkap Sesuai KTP"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700 ml-1">Email</label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="email" 
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
+                    placeholder="nama@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700 ml-1">Kata Sandi</label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="password" 
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-secondary outline-none transition-all"
+                    placeholder="Minimal 6 karakter"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-primary text-white py-5 rounded-[24px] font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 flex items-center justify-center gap-3"
+              >
+                {loading ? 'Mendaftarkan...' : (
+                  <>Daftar & Mulai Persiapan <ArrowRight size={20} /></>
+                )}
+              </button>
+            </form>
+          </div>
 
           <div className="mt-8 text-center">
             <p className="text-gray-500">
