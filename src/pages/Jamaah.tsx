@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { Users, Search, UserPlus, Trash2, Calendar, MapPin, BadgeCheck, Hash, User } from 'lucide-react';
+import { Users, Search, UserPlus, Trash2, Calendar, MapPin, User } from 'lucide-react';
 import './Jamaah.css';
 
 export function Jamaah() {
