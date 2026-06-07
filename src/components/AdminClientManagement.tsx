@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { Users, ShieldCheck, ShieldAlert, Search } from 'lucide-react';
+import { ShieldCheck, Search } from 'lucide-react';
 
 export function AdminClientManagement() {
   const { isAdmin } = useAuth();
