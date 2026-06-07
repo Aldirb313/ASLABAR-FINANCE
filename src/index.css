@@ -1,176 +1,30 @@
-:root {
-  /* Fav Tour Magetan Timur - Premium Palette */
-  --primary-color: #004D40; /* Emerald Deep Green */
-  --primary-light: #00695C;
-  --secondary-color: #C5A021; /* Rich Gold */
-  --secondary-light: #D4AF37;
-  --accent-color: #FF8F00; /* Vibrant Amber */
-  --bg-color: #F4F7F6;
-  --surface-color: #FFFFFF;
-  --text-main: #263238;
-  --text-muted: #546E7A;
-  --danger-color: #D32F2F;
-  --success-color: #2E7D32;
-  --border-color: #ECEFF1;
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cream text-gray-900 font-sans;
+  }
   
-  --radius-lg: 20px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
+  .arabic-text {
+    @apply font-arabic text-2xl leading-loose;
+    direction: rtl;
+  }
+}
+
+@layer components {
+  .btn-spiritual {
+    @apply bg-primary text-white px-6 py-4 rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all active:scale-95 flex items-center justify-center gap-2;
+  }
   
-  --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
-  --shadow-lg: 0 16px 32px rgba(0,0,0,0.12);
+  .card-spiritual {
+    @apply bg-white rounded-[32px] p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow;
+  }
   
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.2);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 100px;
-  position: relative;
-}
-
-/* Glassmorphism Header */
-.app-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: white;
-  padding: 24px 20px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow-md);
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.app-header h1 {
-  font-size: 1.75rem;
-  letter-spacing: -0.5px;
-  font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Modern Card Style */
-.card {
-  background: var(--surface-color);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
-  margin-bottom: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-/* Premium Buttons */
-button {
-  font-family: inherit;
-  font-weight: 700;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: white;
-  padding: 16px 28px;
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 14px 0 rgba(0, 77, 64, 0.3);
-}
-
-.btn-primary:active {
-  transform: scale(0.98);
-}
-
-.btn-secondary {
-  background: white;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  padding: 14px 26px;
-  border-radius: var(--radius-md);
-}
-
-/* Navigation Style */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 600px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  display: flex;
-  padding: 16px 8px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-  border-top: 1px solid var(--border-color);
-  z-index: 1000;
-}
-
-.nav-item {
-  flex: 1;
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 8px;
-  gap: 4px;
-}
-
-.nav-item.active {
-  color: var(--primary-color);
-}
-
-.nav-item.active .nav-icon {
-  background: rgba(0, 77, 64, 0.1);
-  padding: 8px;
-  border-radius: 12px;
-  margin-bottom: -4px;
-}
-
-.loading-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.app-main > div {
-  animation: fadeIn 0.4s ease-out;
+  .nav-blur {
+    @apply bg-white/80 backdrop-blur-xl border-t border-gray-100;
+  }
 }
