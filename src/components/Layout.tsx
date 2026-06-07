@@ -25,7 +25,7 @@ export function Layout() {
   return (
     <div className="container">
       <header className="app-header">
-        <h1>Aslabar Finance</h1>
+        <h1>Fav Tour Magetan Timur</h1>
       </header>
 
       <main className="app-main">

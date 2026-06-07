@@ -1,4 +1,4 @@
-# Spesifikasi Proyek ASLABAR-FINANCE
+# Spesifikasi Proyek Fav Tour Magetan Timur
 
 Dokumen ini berisi spesifikasi lengkap, rancangan arsitektur, dan kebutuhan bisnis untuk aplikasi web manajemen tabungan haji/umroh serta layanan simpan-pinjam.
 

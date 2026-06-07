@@ -37,7 +37,7 @@ export function Login() {
         <div className="auth-header">
           <LogIn size={48} color="var(--primary-color)" />
           <h1>Selamat Datang</h1>
-          <p className="text-muted">Masuk ke akun Aslabar Finance Anda</p>
+          <p className="text-muted">Masuk ke akun Fav Tour Magetan Timur Anda</p>
         </div>
 
         <form onSubmit={handleLogin} className="auth-form">
