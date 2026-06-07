@@ -10,7 +10,8 @@ import {
   Heart,
   BookOpen,
   Wallet,
-  User
+  User,
+  Lock
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
