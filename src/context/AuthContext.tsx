@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 
 interface Profile {
   id: string;
   full_name: string;
   role: 'user' | 'super_admin';
   plan_type: 'free' | 'premium';
+  is_loan_authorized?: boolean;
   departure_date: string | null;
   origin_city: string | null;
   phone_number: string | null;
@@ -18,6 +19,7 @@ interface AuthContextType {
   loading: boolean;
   isAdmin: boolean;
   isPremium: boolean;
+  canAccessLoans: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -26,6 +28,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   isAdmin: false,
   isPremium: false,
+  canAccessLoans: false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -73,7 +76,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       profile, 
       loading, 
       isAdmin: profile?.role === 'super_admin',
-      isPremium: profile?.plan_type === 'premium' || profile?.role === 'super_admin'
+      isPremium: profile?.plan_type === 'premium' || profile?.role === 'super_admin',
+      canAccessLoans: !!profile?.is_loan_authorized || profile?.role === 'super_admin'
     }}>
       {children}
     </AuthContext.Provider>
