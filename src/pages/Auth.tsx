@@ -16,15 +16,17 @@ export function Login() {
     setLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
+      console.error('Login Error:', error.message);
       setError(error.message);
       setLoading(false);
     } else {
+      console.log('Login Success:', data);
       navigate('/');
     }
   };
