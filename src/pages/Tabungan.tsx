@@ -82,6 +82,12 @@ export function Tabungan() {
     setProcessing(false);
   }
 
+  const formatRupiah = (amount: number) => {
+    return 'Rp ' + new Intl.NumberFormat('id-ID', {
+      minimumFractionDigits: 0
+    }).format(amount) + ',-';
+  };
+
   if (loading) return <div className="text-center mt-3">Memuat...</div>;
 
   return (
@@ -163,7 +169,7 @@ export function Tabungan() {
             <div className="flex justify-between items-center mt-2 p-2 bg-light rounded">
               <div>
                 <p className="text-muted">Target Anda</p>
-                <p className="font-bold text-large">Rp {savings.target_amount.toLocaleString()}</p>
+                <p className="font-bold text-large">{formatRupiah(savings.target_amount)}</p>
               </div>
               <CheckCircle size={32} color="var(--success-color)" />
             </div>

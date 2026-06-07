@@ -41,11 +41,9 @@ export function Dashboard() {
   }, [profile]);
 
   const formatRupiah = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
+    return 'Rp ' + new Intl.NumberFormat('id-ID', {
       minimumFractionDigits: 0
-    }).format(amount);
+    }).format(amount) + ',-';
   };
 
   const progressPercent = savingsData ? Math.min((savingsData.current_amount / savingsData.target_amount) * 100, 100) : 0;
