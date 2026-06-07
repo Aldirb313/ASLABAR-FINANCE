@@ -36,7 +36,7 @@ export function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <img 
-            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            src="/logo.png" 
             alt="Logo Fav Tour" 
             className="auth-logo"
           />
@@ -130,7 +130,7 @@ export function Register() {
       <div className="auth-card">
         <div className="auth-header">
           <img 
-            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            src="/logo.png" 
             alt="Logo Fav Tour" 
             className="auth-logo"
           />

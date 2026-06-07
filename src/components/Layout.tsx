@@ -27,7 +27,7 @@ export function Layout() {
       <header className="app-header">
         <div className="header-content">
           <img 
-            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            src="/logo.png" 
             alt="Logo Fav Tour" 
             className="app-logo"
           />
