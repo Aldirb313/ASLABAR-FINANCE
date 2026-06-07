@@ -18,7 +18,11 @@ export function Login() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setError(error.message);
+      if (error.message.includes('rate limit')) {
+        setError('Batas pengiriman email tercapai. Silakan coba Login langsung (akun mungkin sudah aktif) atau tunggu beberapa saat.');
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
     } else {
       navigate('/dashboard');
@@ -134,7 +138,11 @@ export function Register() {
     });
 
     if (error) {
-      setError(error.message);
+      if (error.message.includes('rate limit')) {
+        setError('Batas pengiriman email tercapai. Silakan coba Login langsung (akun mungkin sudah aktif) atau tunggu beberapa saat.');
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
     } else {
       alert('Pendaftaran berhasil! Silakan cek email Anda untuk verifikasi.');
