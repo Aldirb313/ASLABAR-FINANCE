@@ -25,7 +25,14 @@ export function Layout() {
   return (
     <div className="container">
       <header className="app-header">
-        <h1>Fav Tour Magetan Timur</h1>
+        <div className="header-content">
+          <img 
+            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            alt="Logo Fav Tour" 
+            className="app-logo"
+          />
+          <h1>Fav Tour Magetan Timur</h1>
+        </div>
       </header>
 
       <main className="app-main">

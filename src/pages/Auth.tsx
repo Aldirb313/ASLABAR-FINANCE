@@ -35,7 +35,11 @@ export function Login() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <LogIn size={48} color="var(--primary-color)" />
+          <img 
+            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            alt="Logo Fav Tour" 
+            className="auth-logo"
+          />
           <h1>Selamat Datang</h1>
           <p className="text-muted">Masuk ke akun Fav Tour Magetan Timur Anda</p>
         </div>
@@ -125,7 +129,11 @@ export function Register() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <UserPlus size={48} color="var(--primary-color)" />
+          <img 
+            src="https://drive.google.com/uc?export=view&id=1gD1GZ6rX0xInwh99DSdQs7ZOXV47Rl_y" 
+            alt="Logo Fav Tour" 
+            className="auth-logo"
+          />
           <h1>Daftar Akun</h1>
           <p className="text-muted">Lengkapi data untuk mulai menabung Haji</p>
         </div>
@@ -205,4 +213,5 @@ export function Register() {
       </div>
     </div>
   );
+}
 }
